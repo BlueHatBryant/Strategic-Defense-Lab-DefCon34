@@ -1,6 +1,6 @@
 # Contributing
 
-Contributions that improve technical accuracy, accessibility, portability, detection engineering, or independent learning are welcome after the repository owner selects a public license.
+Contributions that improve technical accuracy, accessibility, portability, detection engineering, or independent learning are welcome. The project is licensed [MIT](LICENSE).
 
 ## Before opening a change
 

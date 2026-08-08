@@ -12,8 +12,8 @@
 
 ## Still required before the first public GitHub release
 
-- [ ] Confirm repository ownership and select an explicit reuse license with any required employer or sponsor approval.
-- [ ] Initialize Git and inspect `git status --ignored` before the first commit.
+- [x] License selected: MIT (`LICENSE`). Confirm no employer/sponsor approval obligation applies before relying on this.
+- [x] Initialize Git and inspect `git status --ignored` before the first commit.
 - [ ] Create the GitHub repository and choose the public URL used in the deck/QR code.
 - [ ] Push a branch and confirm the GitHub Actions workflow passes on Linux, macOS, and Windows.
 - [ ] Create a tagged release, such as `defcon34` or `v1.0.0`.

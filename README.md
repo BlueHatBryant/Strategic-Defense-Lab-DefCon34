@@ -8,7 +8,7 @@ Originally created for the DEF CON 34 Cloud Village, the repository is designed 
 
 **Workshop content is complete and validated.** The HTML Workbook and Hardcore Mode use the same fixtures, commands, checkpoints, and four detector completion outcomes. The custom participant ZIP is the recommended conference distribution because it excludes complete solution directories, the answer key under `instructor/`, PowerPoint files, slide generators, optional AWS deployment resources, caches, and learner-local work.
 
-Two publication decisions intentionally remain outside the technical build: select an approved public license and create the GitHub repository/Release URL. Presenter slides are maintained separately on the presenter PC and are not part of the GitHub workshop or attendee ZIP. See the [release and presenter-PC checklist](docs/release-checklist.md).
+The project is licensed [MIT](LICENSE). Creating the GitHub Release URL/tag and attaching the ZIP assets remain publication steps outside the technical build. Presenter slides are maintained separately on the presenter PC and are not part of the GitHub workshop or attendee ZIP. See the [release and presenter-PC checklist](docs/release-checklist.md).
 
 ## Choose a learning path
 
@@ -274,4 +274,4 @@ Analyze only the included synthetic data or systems you own or are explicitly au
 
 ## License
 
-A public reuse license should be selected before the first GitHub release. Because licensing can depend on employer and event-sponsorship obligations, this repository does not assume one on the author's behalf. See [`docs/release-checklist.md`](docs/release-checklist.md).
+[MIT](LICENSE).
