@@ -1,0 +1,31 @@
+{
+  "name": "cross-cloud-federation-reference",
+  "description": "Reference tuning: suppress only the complete expected release behavior, not the subject by itself.",
+  "window_minutes": 15,
+  "min_providers": 2,
+  "privileged_operations": [
+    "SecretGet",
+    "GetSecretValue",
+    "SetIamPolicy",
+    "AttachRolePolicy"
+  ],
+  "approved_workflows": [
+    {
+      "name": "approved-main-release",
+      "subject": "repo:northstar-robotics/agent-deploy:ref:refs/heads/main",
+      "source_ips": ["192.0.2.25"],
+      "providers": ["AWS", "GCP"],
+      "target_roles": ["ReleaseDeployer", "release-deployer"],
+      "provider_role_pairs": [
+        "AWS:ReleaseDeployer",
+        "GCP:release-deployer"
+      ],
+      "token_issuers": ["https://token.actions.example.test"],
+      "token_audiences": [
+        "sts.amazonaws.com",
+        "//iam.googleapis.com/projects/123456789/locations/global/workloadIdentityPools/ci/providers/actions"
+      ],
+      "operations": ["GetSecretValue"]
+    }
+  ]
+}

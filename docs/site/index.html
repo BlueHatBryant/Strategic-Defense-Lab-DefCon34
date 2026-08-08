@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Offline workbook for the Strategic Defense AI and cross-cloud security lab">
+  <title>Strategic Defense — Offline Workshop Workbook</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b1020;--panel:#151d31;--panel2:#1b2740;--text:#eef4ff;--muted:#aebbd1;--accent:#61dafb;--accent2:#a78bfa;--ok:#76e39b;--warn:#ffd166;--danger:#ff7b8b;--border:#344361;--code:#090e1b;--shadow:0 14px 36px #0006}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:80px}body{margin:0;background:radial-gradient(circle at 20% 0,#162443 0,transparent 32rem),var(--bg);color:var(--text);font:16px/1.58 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:var(--accent)}a:hover{color:#a9ecff}button,input,select,textarea{font:inherit}button{cursor:pointer}.skip{position:absolute;left:-9999px}.skip:focus{left:12px;top:12px;z-index:10;background:#fff;color:#000;padding:8px}
+    header{max-width:1160px;margin:auto;padding:52px 24px 28px}.kicker{color:var(--accent);font-weight:750;letter-spacing:.08em;text-transform:uppercase}.lede{max-width:78ch;color:var(--muted);font-size:1.13rem}h1{font-size:clamp(2.2rem,6vw,4.3rem);line-height:1.02;margin:.15em 0}h2{font-size:clamp(1.55rem,3vw,2.15rem);margin:0 0 12px}h3{margin:1.35em 0 .45em}h4{margin:1em 0 .35em}.meta{display:flex;gap:10px;flex-wrap:wrap}.pill{border:1px solid var(--border);background:#111a2c;border-radius:999px;padding:5px 11px;color:var(--muted)}
+    .toolbar{position:sticky;top:0;z-index:5;background:#0b1020ee;border-block:1px solid var(--border);backdrop-filter:blur(12px)}.toolbar-inner{max-width:1160px;margin:auto;padding:10px 24px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}.toolbar nav{display:flex;gap:12px;flex:1;overflow:auto;white-space:nowrap}.toolbar nav a{text-decoration:none;font-weight:650}.toolbar label{color:var(--muted)}.toolbar select,.toolbar button{color:var(--text);background:var(--panel);border:1px solid var(--border);border-radius:7px;padding:6px 9px}.progress-wrap{display:flex;align-items:center;gap:8px;min-width:170px}.progress{width:105px;height:9px;background:#27334b;border-radius:99px;overflow:hidden}.progress>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:width .2s}
+    main{max-width:1160px;margin:auto;padding:10px 24px 70px}.section{margin:24px 0;padding:26px;border:1px solid var(--border);background:#11192ae8;border-radius:15px;box-shadow:var(--shadow)}.section>p:first-of-type{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px}.card{border:1px solid var(--border);background:var(--panel);border-radius:11px;padding:16px}.card h3,.card h4{margin-top:0}.callout{border-left:4px solid var(--accent);background:var(--panel);padding:13px 16px;margin:14px 0}.callout.warn{border-color:var(--warn)}.callout.ok{border-color:var(--ok)}.callout.danger{border-color:var(--danger)}
+    .step{display:grid;grid-template-columns:34px 1fr;gap:12px;margin:18px 0}.step-num{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--accent2);font-weight:800}.task{display:flex;gap:9px;align-items:flex-start;padding:9px 0}.task input{width:19px;height:19px;margin-top:3px;accent-color:var(--ok)}
+    .command{position:relative;margin:10px 0}.command pre{margin:0;padding-right:78px}.copy{position:absolute;right:8px;top:8px;border:1px solid var(--border);border-radius:6px;background:var(--panel2);color:var(--text);padding:5px 9px}.copy:hover{border-color:var(--accent)}pre{background:var(--code);border:1px solid var(--border);border-radius:9px;padding:15px;overflow:auto;color:#d9e7ff;white-space:pre-wrap;word-break:break-word}code{font-family:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace}p code,li code,td code{background:#202c45;border-radius:4px;padding:.1em .3em;color:#cdefff}
+    table{width:100%;border-collapse:collapse;margin:12px 0;display:block;overflow:auto}th,td{text-align:left;vertical-align:top;padding:9px;border-bottom:1px solid var(--border)}th{color:var(--muted);background:#172139}td input,td select{width:100%;min-width:130px;background:var(--code);color:var(--text);border:1px solid var(--border);border-radius:5px;padding:6px}textarea{width:100%;min-height:100px;resize:vertical;background:var(--code);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:11px}textarea:focus,input:focus,select:focus,button:focus{outline:2px solid var(--accent);outline-offset:2px}.saved{font-size:.87rem;color:var(--muted)}details{border:1px solid var(--border);border-radius:8px;background:var(--panel);padding:10px 13px;margin:9px 0}summary{cursor:pointer;font-weight:700;color:var(--accent)}
+    .topology{text-align:center}.origin{display:inline-block;background:#252f52;border:2px solid var(--accent2);border-radius:12px;padding:13px 20px}.arrow{font-size:1.7rem;color:var(--accent);line-height:1}.clouds{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.cloud{min-height:185px;border:2px solid var(--border);border-radius:16px;padding:14px;background:var(--panel)}.cloud.aws{border-color:#ffad42}.cloud.gcp{border-color:#5ca8ff}.cloud.azure{border-color:#44c7ef}.cloud strong{font-size:1.1rem}.cloud ul{text-align:left;padding-left:20px}.sink{display:inline-block;background:#183832;border:2px solid var(--ok);border-radius:12px;padding:13px 20px}.flow-note{color:var(--muted);font-size:.93rem}
+    .annotated{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(250px,.65fr);gap:16px}.legend{counter-reset:item}.legend li{margin:8px 0}.tag{display:inline-block;min-width:24px;text-align:center;border-radius:50%;background:var(--accent2);font-weight:800;color:white}.json-key{color:#91d7ff}.json-value{color:#a9e6b1}.json-number{color:#ffd789}.json-focus{background:#283458;display:inline}.join{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;text-align:center;background:var(--code);padding:15px;border-radius:8px;border:1px solid var(--border);overflow:auto}
+    footer{max-width:1160px;margin:auto;padding:20px 24px 50px;color:var(--muted)}.noscript{background:#442b22;padding:12px;text-align:center}.screen-reader{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+    @media(max-width:760px){.annotated{grid-template-columns:1fr}.clouds{grid-template-columns:1fr}.toolbar{position:static}.section{padding:18px}.toolbar-inner{align-items:flex-start}.progress-wrap{width:100%}.progress{flex:1}}
+    @media print{.toolbar,.copy,.actions,.saved{display:none!important}body{background:white;color:#111}.section,.card,pre,details{box-shadow:none;background:white;color:#111;border-color:#aaa}a{color:#174ea6}.cloud{break-inside:avoid}textarea{border:1px solid #777;background:white;color:#111}.section{break-inside:auto}}
+  </style>
+</head>
+<body>
+<a class="skip" href="#start">Skip to workbook</a>
+<noscript><div class="noscript">JavaScript is disabled. The workbook content and commands still work, but copy buttons, progress, and saved notes are unavailable.</div></noscript>
+<header>
+  <div class="kicker">Offline attendee workbook</div>
+  <h1>Strategic Defense</h1>
+  <p class="lede">Secure an AI-agent workload, investigate prompt-injection evidence, reconstruct one workload identity across three clouds, and tune an OCSF-oriented detector. Open this file locally; no server, account, or network is required.</p>
+  <div class="meta"><span class="pill">75–90 minutes</span><span class="pill">Python 3.10+</span><span class="pill">Synthetic evidence</span><span class="pill">No cloud access</span></div>
+</header>
+<div class="toolbar">
+  <div class="toolbar-inner">
+    <nav aria-label="Workbook sections"><a href="#start">Start</a><a href="#architecture">Environment</a><a href="#part-a">Part A</a><a href="#ocsf">Read OCSF</a><a href="#part-b">Part B</a><a href="#finish">Finish</a></nav>
+    <label for="platform">Commands:</label><select id="platform"><option value="unix">macOS / Linux</option><option value="windows">Windows</option></select>
+    <div class="progress-wrap" aria-live="polite"><div class="progress" aria-hidden="true"><span id="progressBar"></span></div><span id="progressText">0/13</span></div>
+    <div class="actions"><button id="exportNotes" type="button">Export notes</button><button id="clearProgress" type="button">Reset</button></div>
+  </div>
+</div>
+<main>
+  <section class="section" id="start">
+    <h2>Start here</h2>
+    <div class="callout warn"><strong>Extract the ZIP first.</strong> Do not run the workshop from inside an archive preview. Open a terminal in the extracted <code>strategic-defense-lab</code> folder.</div>
+    <div class="grid">
+      <article class="card"><h3>Recommended</h3><p>Open the folder in VS Code and use its built-in terminal. No extensions are needed.</p></article>
+      <article class="card"><h3>Also supported</h3><p>Notepad++ plus PowerShell, BBEdit, Sublime Text, or any plain-text editor and terminal.</p></article>
+      <article class="card"><h3>Not required</h3><p>No Git, Docker, <code>jq</code>, Python packages, cloud credentials, paid services, or live internet.</p></article>
+    </div>
+    <div class="callout"><strong>Choose your mode:</strong> stay in this guided HTML Workbook, or switch at any time to <a href="../participant-guide.md">Hardcore Mode</a> using the Markdown labs, raw JSON/JSONL files, your editor, terminal, and manual notes. Both modes use the same commands and completion tests.</div>
+    <div class="step"><div class="step-num">1</div><div><h3>Verify the bundle</h3><div class="command"><pre><code data-command="tools/workshop.py verify"></code></pre><button class="copy" type="button">Copy</button></div><p>Expected: every validation group begins with <strong>PASS</strong>. If not, confirm your terminal is at the repository root and re-extract a fresh archive.</p></div></div>
+    <label class="task"><input type="checkbox" data-step="verify"><span>I extracted the archive and verification passed.</span></label>
+    <label for="setupNotes"><strong>Setup notes</strong></label><textarea id="setupNotes" data-note="setup" placeholder="Record any setup issue or pairing arrangement."></textarea><div class="saved" data-saved="setup">Saved locally when the browser permits.</div>
+  </section>
+
+  <section class="section" id="architecture">
+    <h2>Simulated environment</h2>
+    <p>The three providers do not directly trust each other. One OIDC workload federates independently into each provider, and each provider emits telemetry that converges for detection.</p>
+    <div class="topology" role="img" aria-label="A shared CI OIDC subject federates into AWS, Google Cloud, and Microsoft Azure. AWS hosts the GenAI application, Google Cloud hosts data services, and Azure hosts security operations. Telemetry converges into OCSF normalization and detection.">
+      <div class="origin"><strong>GitHub-style CI / OIDC workload subject</strong><br><code>repo:northstar-robotics/agent-deploy</code></div>
+      <div class="arrow">↓ &nbsp;&nbsp;&nbsp;&nbsp; ↓ &nbsp;&nbsp;&nbsp;&nbsp; ↓</div>
+      <div class="clouds">
+        <div class="cloud aws"><strong>AWS · GenAI application</strong><ul><li>Bedrock model and Guardrails</li><li>Agent application/tool layer</li><li>S3 retrieval content</li><li>Secrets Manager</li><li>CloudTrail and invocation telemetry</li></ul></div>
+        <div class="cloud gcp"><strong>Google Cloud · Data plane</strong><ul><li>BigQuery or protected data API</li><li>Workload Identity Federation</li><li>Service accounts</li><li>Cloud Audit Logs</li><li>IAM policy controls</li></ul></div>
+        <div class="cloud azure"><strong>Azure · Security plane</strong><ul><li>Microsoft Entra ID</li><li>Key Vault</li><li>Event Hubs / Log Analytics</li><li>Microsoft Sentinel</li><li>Custom OCSF ingestion/mapping</li></ul></div>
+      </div>
+      <div class="arrow">↘ &nbsp;&nbsp;&nbsp;&nbsp; ↓ telemetry ↓ &nbsp;&nbsp;&nbsp;&nbsp; ↙</div>
+      <div class="sink"><strong>OCSF-normalized teaching records</strong><br>rolling 15-minute cross-cloud detector</div>
+    </div>
+    <p class="flow-note">The fixture currently records GCP <code>SetIamPolicy</code> at project scope and Azure Key Vault access. The data/SIEM services provide architectural context; the records do not claim direct cloud-to-cloud network calls.</p>
+    <div class="callout"><strong>Two incidents:</strong> Part A’s AI-agent event and Part B’s CI-federation event are related lessons, not one causal chain.</div>
+    <label class="task"><input type="checkbox" data-step="architecture"><span>I can distinguish application, data, security, federation, and telemetry flows.</span></label>
+  </section>
+
+  <section class="section" id="part-a">
+    <h2>Part A — Secure the AI stack</h2>
+    <p>Investigate before revealing answers. Record evidence about intent, provenance, requested authority, control decision, and outcome.</p>
+    <h3>A1 · Review effective authority</h3>
+    <p>Open <a href="../../data/iam/agent-execution-role-overbroad.json"><code>data/iam/agent-execution-role-overbroad.json</code></a>. Compare each action and resource with the support agent’s job.</p>
+    <table><thead><tr><th>Statement</th><th>Excessive action?</th><th>Excessive resource?</th><th>Plausible impact</th></tr></thead><tbody>
+      <tr><td><code>AllAgentDocuments</code></td><td><input data-answer="a1-doc-action" aria-label="AllAgentDocuments excessive action"></td><td><input data-answer="a1-doc-resource" aria-label="AllAgentDocuments excessive resource"></td><td><input data-answer="a1-doc-impact" aria-label="AllAgentDocuments impact"></td></tr>
+      <tr><td><code>AllBedrockActions</code></td><td><input data-answer="a1-bed-action" aria-label="AllBedrockActions excessive action"></td><td><input data-answer="a1-bed-resource" aria-label="AllBedrockActions excessive resource"></td><td><input data-answer="a1-bed-impact" aria-label="AllBedrockActions impact"></td></tr>
+      <tr><td><code>DecryptAnyKey</code></td><td><input data-answer="a1-kms-action" aria-label="DecryptAnyKey excessive action"></td><td><input data-answer="a1-kms-resource" aria-label="DecryptAnyKey excessive resource"></td><td><input data-answer="a1-kms-impact" aria-label="DecryptAnyKey impact"></td></tr>
+      <tr><td><code>PrivilegeDelegation</code></td><td><input data-answer="a1-iam-action" aria-label="PrivilegeDelegation excessive action"></td><td><input data-answer="a1-iam-resource" aria-label="PrivilegeDelegation excessive resource"></td><td><input data-answer="a1-iam-impact" aria-label="PrivilegeDelegation impact"></td></tr>
+      <tr><td><code>WriteAnyLogGroup</code></td><td><input data-answer="a1-log-action" aria-label="WriteAnyLogGroup excessive action"></td><td><input data-answer="a1-log-resource" aria-label="WriteAnyLogGroup excessive resource"></td><td><input data-answer="a1-log-impact" aria-label="WriteAnyLogGroup impact"></td></tr>
+    </tbody></table>
+    <div class="command"><pre><code data-command="tools/workshop.py iam"></code></pre><button class="copy" type="button">Copy</button></div>
+    <p>Compare the reveal with <a href="../../data/iam/agent-execution-role-least-privilege.json">the constrained policy</a>. Find one S3 prefix, one model, one KMS key and context, one log-stream pattern, and no IAM actions.</p>
+    <details><summary>A1 Hint 1</summary><p>Look for <code>*</code> in both <code>Action</code> and <code>Resource</code>.</p></details>
+    <details><summary>A1 Hint 2</summary><p>A role-delegation permission also needs a compatible service API and trust relationship before it becomes an escalation path.</p></details>
+    <label class="task"><input type="checkbox" data-step="a1"><span>A1 complete: I can explain how effective authority bounds impact.</span></label>
+
+    <h3>A2 · Classify invocation evidence</h3>
+    <div class="command"><pre><code data-command="tools/workshop.py prompts --evidence"></code></pre><button class="copy" type="button">Copy</button></div>
+    <table><thead><tr><th>Request</th><th>My classification</th><th>Evidence beyond a keyword</th></tr></thead><tbody id="classificationRows"></tbody></table>
+    <p>Only after classifying all eight records, reveal the reference analysis:</p>
+    <div class="command"><pre><code data-command="tools/workshop.py prompts"></code></pre><button class="copy" type="button">Copy</button></div>
+    <details><summary>A2 Hint 1</summary><p>Compare provenance, requested authority, tool decision, Guardrail assessment, and outcome—not merely phrases such as “ignore previous instructions.”</p></details>
+    <details><summary>A2 Hint 2</summary><p>Retrieved text has data provenance, not system authority. Look closely at the unapproved maintenance bulletin.</p></details>
+    <label class="task"><input type="checkbox" data-step="a2"><span>A2 complete: I classified all records before using the reveal.</span></label>
+
+    <h3>A3 · Place controls at the correct layer</h3>
+    <p>Open <a href="../../data/bedrock/guardrail-config.json"><code>data/bedrock/guardrail-config.json</code></a>. Guardrail policy, IAM, retrieval trust, deterministic tool authorization, and output validation solve different problems.</p>
+    <div class="grid"><div class="card"><h4>Probabilistic controls</h4><p>Prompt-attack, denied-topic, and sensitive-information assessment can false-positive or false-negative.</p></div><div class="card"><h4>Deterministic controls</h4><p>Resource-scoped IAM, retrieval provenance, tool allowlists, parameter validation, and approval gates decide whether impact is possible.</p></div><div class="card"><h4>Input/output hygiene</h4><p>Strip Unicode tag characters and orphaned surrogates until stable; validate and contextually encode output.</p></div></div>
+    <label for="partANotes"><strong>Part A conclusion</strong></label><textarea id="partANotes" data-note="part-a" placeholder="Why was req-1004 dangerous, what stopped it, and what would least privilege protect?"></textarea><div class="saved" data-saved="part-a">Saved locally when the browser permits.</div>
+    <label class="task"><input type="checkbox" data-step="a3"><span>A3 complete: I can identify the final authority for each control.</span></label>
+  </section>
+
+  <section class="section" id="ocsf">
+    <h2>How to read one OCSF event</h2>
+    <p>This is a selected-field excerpt from the Azure authentication fixture. It is normalized teaching data, not a byte-for-byte Entra export. Numbers correspond to the explanation.</p>
+    <div class="annotated">
+      <pre aria-label="Annotated OCSF authentication sample"><code>{
+  <span class="json-key">"time_dt"</span>: <span class="json-value">"2026-08-08T23:35:00Z"</span>,                 <span class="tag">1</span>
+  <span class="json-key">"class_uid"</span>: <span class="json-number">3002</span>,
+  <span class="json-key">"class_name"</span>: <span class="json-value">"Authentication"</span>,                    <span class="tag">2</span>
+  <span class="json-key">"activity_id"</span>: <span class="json-number">1</span>,
+  <span class="json-key">"activity_name"</span>: <span class="json-value">"Logon"</span>,
+  <span class="json-key">"status"</span>: <span class="json-value">"Success"</span>,                                <span class="tag">3</span>
+  <span class="json-key">"metadata"</span>: {
+    <span class="json-key">"event_code"</span>: <span class="json-value">"WorkloadIdentitySignIn"</span>
+  },
+  <span class="json-key">"cloud"</span>: { <span class="json-key">"provider"</span>: <span class="json-value">"Azure"</span> },                 <span class="tag">4</span>
+  <span class="json-key">"actor"</span>: { <span class="json-key">"user"</span>: {
+    <span class="json-key">"uid"</span>: <span class="json-value">"repo:northstar-robotics/agent-deploy:
+            ref:refs/heads/feature-debug"</span>
+  }},                                                        <span class="tag">5</span>
+  <span class="json-key">"user"</span>: {
+    <span class="json-key">"name"</span>: <span class="json-value">"DeploymentContributor"</span>,
+    <span class="json-key">"type"</span>: <span class="json-value">"Service Principal"</span>
+  },                                                         <span class="tag">6</span>
+  <span class="json-key">"src_endpoint"</span>: { <span class="json-key">"ip"</span>: <span class="json-value">"198.51.100.42"</span> },      <span class="tag">7</span>
+  <span class="json-key">"session"</span>: { <span class="json-key">"uid"</span>: <span class="json-value">"az-attack-01"</span> },             <span class="tag">8</span>
+  <span class="json-key">"unmapped"</span>: {
+    <span class="json-key">"token_issuer"</span>: <span class="json-value">"https://token.actions.example.test"</span>,
+    <span class="json-key">"token_audience"</span>: <span class="json-value">"api://AzureADTokenExchange"</span>,
+    <span class="json-key">"target_role"</span>: <span class="json-value">"DeploymentContributor"</span>
+  }                                                          <span class="tag">9</span>
+}</code></pre>
+      <ol class="legend"><li><span class="tag">1</span> <strong>When:</strong> ISO time; <code>time</code> also carries epoch milliseconds.</li><li><span class="tag">2</span> <strong>What:</strong> class 3002 is Authentication; activity 1 is Logon.</li><li><span class="tag">3</span> <strong>Outcome:</strong> the authentication succeeded.</li><li><span class="tag">4</span> <strong>Where:</strong> Azure is the provider.</li><li><span class="tag">5</span> <strong>Initiator:</strong> the external CI/OIDC workload subject.</li><li><span class="tag">6</span> <strong>Target:</strong> the Azure principal obtained by federation.</li><li><span class="tag">7</span> <strong>Source:</strong> useful context, but not identity by itself.</li><li><span class="tag">8</span> <strong>Session:</strong> connects authentication to later API activity.</li><li><span class="tag">9</span> <strong>Preserved claims:</strong> issuer, audience, and role remain available without forcing an uncertain universal mapping.</li></ol>
+    </div>
+    <h3>Connect authentication to API activity</h3>
+    <div class="join">OIDC subject → Azure Authentication → session <strong>az-attack-01</strong> → DeploymentContributor → Key Vault <strong>SecretGet</strong><br>Original subject preserved as <strong>unmapped.federation_subject</strong></div>
+    <p>In the API Activity record, <code>actor.user</code> is the provider service principal—not the external OIDC subject. The shared <code>session.uid</code> and preserved federation subject maintain the chain.</p>
+    <div class="grid"><div class="card"><h4>Authentication · 3002</h4><p>Who exchanged into which provider principal? Read actor, target user, issuer, audience, source, and session.</p></div><div class="card"><h4>API Activity · 6003</h4><p>What did the provider principal do? Read actor, operation, service, resource, source, and session.</p></div></div>
+    <p><a href="../ocsf-sample.md">Open the complete annotated Authentication and API Activity samples</a> or <a href="../../data/ocsf/cross-cloud-events.jsonl">inspect all ten fixture records</a>.</p>
+    <label class="task"><input type="checkbox" data-step="ocsf"><span>I can explain actor, target principal, session, issuer, audience, and operation.</span></label>
+  </section>
+
+  <section class="section" id="part-b">
+    <h2>Part B — Hunt across clouds</h2>
+    <h3>B1 · Orient to the schema</h3>
+    <div class="command"><pre><code data-command="tools/workshop.py schema"></code></pre><button class="copy" type="button">Copy</button></div>
+    <p>Use the annotated example above and <a href="../ocsf-field-guide.md">the field guide</a>. Find one Authentication event from each provider.</p>
+    <table><thead><tr><th>Provider</th><th>Native event</th><th>Target principal</th><th>Session</th><th>Audience</th></tr></thead><tbody>
+      <tr><td>AWS</td><td><input data-answer="b1-aws-event" aria-label="AWS native event"></td><td><input data-answer="b1-aws-target" aria-label="AWS target principal"></td><td><input data-answer="b1-aws-session" aria-label="AWS session"></td><td><input data-answer="b1-aws-audience" aria-label="AWS audience"></td></tr>
+      <tr><td>Azure</td><td><input data-answer="b1-az-event" aria-label="Azure native event"></td><td><input data-answer="b1-az-target" aria-label="Azure target principal"></td><td><input data-answer="b1-az-session" aria-label="Azure session"></td><td><input data-answer="b1-az-audience" aria-label="Azure audience"></td></tr>
+      <tr><td>GCP</td><td><input data-answer="b1-gcp-event" aria-label="GCP native event"></td><td><input data-answer="b1-gcp-target" aria-label="GCP target principal"></td><td><input data-answer="b1-gcp-session" aria-label="GCP session"></td><td><input data-answer="b1-gcp-audience" aria-label="GCP audience"></td></tr>
+    </tbody></table>
+    <label class="task"><input type="checkbox" data-step="b1"><span>B1 complete: I found one Authentication event per provider.</span></label>
+
+    <h3>B2 · Reconstruct the feature-branch pivot</h3>
+    <p>Search <a href="../../data/ocsf/cross-cloud-events.jsonl">the event fixture</a> for <code>198.51.100.42</code>. Before revealing the timeline, record the first authentication, subject, providers, target principals, sessions, and sensitive actions.</p>
+    <label for="timelineHypothesis"><strong>My timeline hypothesis</strong></label><textarea id="timelineHypothesis" data-note="timeline" placeholder="First seen… Providers… Threshold time… Privileged follow-on…"></textarea><div class="saved" data-saved="timeline">Saved locally when the browser permits.</div>
+    <div class="command"><pre><code data-command="tools/workshop.py timeline"></code></pre><button class="copy" type="button">Copy</button></div>
+    <details><summary>B2 Hint 1</summary><p>The same feature-branch subject reaches Azure, AWS, then GCP. Use <code>session.uid</code> to connect each provider authentication to its API activity.</p></details>
+    <details><summary>B2 Hint 2</summary><p>The multi-provider threshold is reached at the second distinct provider; the detector requires a sensitive operation at or after that point.</p></details>
+    <label class="task"><input type="checkbox" data-step="b2"><span>B2 complete: I identified the threshold and ordered follow-on action.</span></label>
+
+    <h3>B3 · Tune and test the detector</h3>
+    <div class="step"><div class="step-num">1</div><div><h4>Run the noisy starter</h4><div class="command"><pre><code data-command="tools/workshop.py detect"></code></pre><button class="copy" type="button">Copy</button></div><p>Expected: two active candidates—one feature-branch incident and one approved release that requires precise tuning.</p></div></div>
+    <div class="step"><div class="step-num">2</div><div><h4>Create the editable config</h4><div class="command"><pre><code data-command="tools/workshop.py start-detection"></code></pre><button class="copy" type="button">Copy</button></div><p>Open <code>work/cross-cloud-federation-config.json</code> and add one object to <code>approved_workflows</code>.</p></div></div>
+    <div class="step"><div class="step-num">3</div><div><h4>Describe exact expected behavior</h4><pre><code>{
+  "name": "descriptive-baseline-name",
+  "subject": "exact value",
+  "source_ips": ["exact expected source"],
+  "providers": ["exact provider set"],
+  "target_roles": ["exact role set"],
+  "provider_role_pairs": ["Provider:exact-role"],
+  "token_issuers": ["exact issuer"],
+  "token_audiences": ["exact audience set"],
+  "operations": ["only expected sensitive operations"]
+}</code></pre><p>Do not lower the provider threshold, remove sensitive operations, or allowlist only the subject.</p></div></div>
+    <div class="step"><div class="step-num">4</div><div><h4>Inspect and test</h4><div class="command"><pre><code data-command="tools/workshop.py detect --config work/cross-cloud-federation-config.json --show-suppressed"></code></pre><button class="copy" type="button">Copy</button></div><div class="command"><pre><code data-command="tools/workshop.py test-detection --config work/cross-cloud-federation-config.json"></code></pre><button class="copy" type="button">Copy</button></div></div></div>
+    <div class="callout ok"><strong>Completion requires four passes:</strong> attack active; exact release suppressed; role/provider swap still alerts; approved subject with attack behavior still alerts.</div>
+    <details><summary>B3 Hint 1</summary><p>JSON errors usually indicate a missing comma, quote, bracket, or brace. Populate every field and use exact sets.</p></details>
+    <details><summary>B3 Hint 2</summary><p>Compare subject, source, provider set, roles, provider-role pairs, issuer, audiences, and operations. A subject can be compromised.</p></details>
+    <label class="task"><input type="checkbox" data-step="b3-start"><span>I ran the starter and created my work configuration.</span></label>
+    <label class="task"><input type="checkbox" data-step="b3-tune"><span>I tuned an exact behavioral baseline without weakening detection.</span></label>
+    <label class="task"><input type="checkbox" data-step="b3-test"><span>All four detector tests pass.</span></label>
+    <label for="partBNotes"><strong>Part B conclusion</strong></label><textarea id="partBNotes" data-note="part-b" placeholder="The detector correlates… reaches a threshold at… requires… and suppresses only when…"></textarea><div class="saved" data-saved="part-b">Saved locally when the browser permits.</div>
+  </section>
+
+  <section class="section" id="finish">
+    <h2>Finish and explain</h2>
+    <ol><li>Which deterministic control stopped the indirect tool request?</li><li>Why is a discussion about prompt injection not itself an attack?</li><li>Which stable claims connected the three provider sessions?</li><li>When was the second-provider threshold reached?</li><li>Why are subject-only and role-name-only suppressions unsafe?</li><li>What must change when implementing the rule in a real SIEM?</li></ol>
+    <label for="finalNotes"><strong>My final explanation</strong></label><textarea id="finalNotes" data-note="final" placeholder="Summarize the two incidents and the shared authorization/identity lesson."></textarea><div class="saved" data-saved="final">Saved locally when the browser permits.</div>
+    <label class="task"><input type="checkbox" data-step="reflection"><span>I can explain both incidents without relying on the answer key.</span></label>
+    <label class="task"><input type="checkbox" data-step="complete"><span>Workshop complete.</span></label>
+    <div class="callout"><strong>Keep going:</strong> review <a href="../../queries/ocsf-cross-cloud-federation.sql">the portable SQL design</a>, <a href="../../detections/cross-cloud-federation.yml">the engine-neutral rule</a>, or the optional extensions in <a href="../../labs/part-b-ocsf.md">Part B</a>.</div>
+  </section>
+</main>
+<footer><p>All accounts, identities, IP addresses, prompts, and events are synthetic. Analyze only provided evidence or systems you own or are explicitly authorized to assess.</p><p>Notes remain in this browser profile when local storage is available. Use <strong>Export notes</strong> before moving or replacing the workbook file.</p></footer>
+<script>
+(() => {
+  'use strict';
+  const $ = (s, root=document) => root.querySelector(s);
+  const $$ = (s, root=document) => [...root.querySelectorAll(s)];
+  const storePrefix = 'strategic-defense-workbook-v1:';
+  const memory = new Map();
+  const safeStore = {
+    get(key){try{return localStorage.getItem(storePrefix+key)}catch(_){return memory.get(key) ?? null}},
+    set(key,value){try{localStorage.setItem(storePrefix+key,value)}catch(_){memory.set(key,value)}},
+    removeAll(){try{Object.keys(localStorage).filter(k=>k.startsWith(storePrefix)).forEach(k=>localStorage.removeItem(k))}catch(_){memory.clear()}}
+  };
+
+  const requests = ['req-1001','req-1002','req-1003','req-1004','req-1005','req-1006','req-1008','req-1007'];
+  const classes = ['','ordinary request','benign security discussion','direct prompt attack','indirect prompt attack','system/developer instruction disclosure attempt','PII anonymization','PII blocking'];
+  const tbody = $('#classificationRows');
+  requests.forEach(id => {
+    const row = document.createElement('tr');
+    const idCell = document.createElement('td'); idCell.innerHTML = `<code>${id}</code>`;
+    const classCell = document.createElement('td');
+    const select = document.createElement('select'); select.dataset.answer = `class-${id}`; select.setAttribute('aria-label', `${id} classification`);
+    classes.forEach(value => {const option=document.createElement('option');option.value=value;option.textContent=value||'Choose…';select.append(option)});
+    classCell.append(select);
+    const evidenceCell = document.createElement('td');
+    const input = document.createElement('input'); input.dataset.answer=`evidence-${id}`; input.setAttribute('aria-label',`${id} evidence`); input.placeholder='provenance, action, control, outcome'; evidenceCell.append(input);
+    row.append(idCell,classCell,evidenceCell); tbody.append(row);
+  });
+
+  const platform = $('#platform');
+  platform.value = safeStore.get('platform') || (/Win/.test(navigator.platform) ? 'windows' : 'unix');
+  function updateCommands(){
+    const prefix = platform.value === 'windows' ? 'py -3' : 'python3';
+    $$('[data-command]').forEach(el => {el.textContent = `${prefix} ${el.dataset.command}`});
+    safeStore.set('platform',platform.value);
+  }
+  platform.addEventListener('change',updateCommands); updateCommands();
+
+  async function copyText(text, button){
+    let copied=false;
+    try{await navigator.clipboard.writeText(text);copied=true}catch(_){
+      const temp=document.createElement('textarea');temp.value=text;temp.style.position='fixed';temp.style.opacity='0';document.body.append(temp);temp.select();
+      try{copied=document.execCommand('copy')}catch(__){copied=false}temp.remove();
+    }
+    const previous=button.textContent;button.textContent=copied?'Copied':'Select text';setTimeout(()=>button.textContent=previous,1300);
+  }
+  $$('.copy').forEach(button => button.addEventListener('click',() => copyText($('code',button.parentElement).textContent,button)));
+
+  function updateProgress(){
+    const steps=$$('[data-step]');const done=steps.filter(step=>step.checked).length;
+    $('#progressText').textContent=`${done}/${steps.length}`;$('#progressBar').style.width=`${steps.length?done/steps.length*100:0}%`;
+  }
+  $$('[data-step]').forEach(step => {step.checked=safeStore.get(`step:${step.dataset.step}`)==='true';step.addEventListener('change',()=>{safeStore.set(`step:${step.dataset.step}`,String(step.checked));updateProgress()})});
+  updateProgress();
+
+  function restoreField(field,key){const value=safeStore.get(key);if(value!==null)field.value=value;field.addEventListener('input',()=>safeStore.set(key,field.value));field.addEventListener('change',()=>safeStore.set(key,field.value))}
+  $$('[data-note]').forEach(field=>restoreField(field,`note:${field.dataset.note}`));
+  $$('[data-answer]').forEach(field=>restoreField(field,`answer:${field.dataset.answer}`));
+
+  $('#clearProgress').addEventListener('click',()=>{if(!confirm('Clear all workbook progress and locally saved answers?'))return;safeStore.removeAll();$$('[data-step]').forEach(x=>x.checked=false);$$('[data-note],[data-answer]').forEach(x=>x.value='');platform.value=/Win/.test(navigator.platform)?'windows':'unix';updateCommands();updateProgress()});
+  $('#exportNotes').addEventListener('click',()=>{
+    const lines=['# Strategic Defense — exported attendee notes','',`Exported: ${new Date().toISOString()}`,''];
+    $$('[data-note]').forEach(field=>{lines.push(`## ${field.id || field.dataset.note}`,'',field.value || '(blank)','')});
+    lines.push('## Exercise responses','');
+    $$('[data-answer]').forEach(field=>{if(field.value)lines.push(`- ${field.dataset.answer}: ${field.value}`)});
+    lines.push('','## Progress','');$$('[data-step]').forEach(step=>lines.push(`- [${step.checked?'x':' '}] ${step.parentElement.textContent.trim()}`));
+    const blob=new Blob([lines.join('\n')],{type:'text/markdown'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='strategic-defense-notes.md';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),500);
+  });
+})();
+</script>
+</body>
+</html>

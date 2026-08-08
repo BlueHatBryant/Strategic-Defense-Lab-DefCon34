@@ -1,0 +1,51 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ListApprovedDocumentPrefix",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::northstar-agent-docs-111122223333",
+      "Condition": {
+        "StringLike": {
+          "s3:prefix": "approved/*"
+        }
+      }
+    },
+    {
+      "Sid": "ReadApprovedDocuments",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::northstar-agent-docs-111122223333/approved/*"
+    },
+    {
+      "Sid": "InvokeApprovedModel",
+      "Effect": "Allow",
+      "Action": "bedrock:InvokeModel",
+      "Resource": "arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-lite-v1:0"
+    },
+    {
+      "Sid": "DecryptApprovedDocumentObjects",
+      "Effect": "Allow",
+      "Action": "kms:Decrypt",
+      "Resource": "arn:aws:kms:us-east-1:111122223333:key/11111111-2222-3333-4444-555555555555",
+      "Condition": {
+        "StringLike": {
+          "kms:EncryptionContext:aws:s3:arn": "arn:aws:s3:::northstar-agent-docs-111122223333/approved/*"
+        },
+        "StringEquals": {
+          "kms:ViaService": "s3.us-east-1.amazonaws.com"
+        }
+      }
+    },
+    {
+      "Sid": "WriteAgentInvocationLogs",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "arn:aws:logs:us-east-1:111122223333:log-group:/workshops/northstar/agent:log-stream:agent-*"
+    }
+  ]
+}

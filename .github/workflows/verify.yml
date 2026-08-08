@@ -1,0 +1,55 @@
+name: verify-lab
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ['3.10', '3.12', '3.13']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Compile Python
+        run: python -m py_compile tools/workshop.py tools/demo.py scripts/package_release.py tests/test_workshop.py tests/test_release.py
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Verify workshop
+        run: python tools/workshop.py verify
+      - name: Smoke-test quick tour
+        run: python tools/demo.py --fast --no-color
+      - name: Check shell syntax
+        if: runner.os == 'Linux'
+        run: bash -n scripts/deploy.sh scripts/cleanup.sh
+      - name: Build attendee release
+        if: runner.os == 'Linux' && matrix.python-version == '3.12'
+        run: python scripts/package_release.py
+      - name: Verify extracted attendee release
+        if: runner.os == 'Linux' && matrix.python-version == '3.12'
+        run: |
+          python -c "import zipfile; zipfile.ZipFile('dist/strategic-defense-lab.zip').extractall('dist/extracted')"
+          cd dist/extracted/strategic-defense-lab
+          python -m unittest discover -s tests -v
+          python tools/workshop.py verify
+      - name: Upload attendee release
+        if: runner.os == 'Linux' && matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: strategic-defense-lab
+          path: |
+            dist/strategic-defense-lab.zip
+            dist/strategic-defense-lab.zip.sha256
+          if-no-files-found: error

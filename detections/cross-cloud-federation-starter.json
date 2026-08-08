@@ -1,0 +1,13 @@
+{
+  "name": "cross-cloud-federation-starter",
+  "description": "Intentionally noisy starter. Tune the approved_workflows array without weakening attack detection.",
+  "window_minutes": 15,
+  "min_providers": 2,
+  "privileged_operations": [
+    "SecretGet",
+    "GetSecretValue",
+    "SetIamPolicy",
+    "AttachRolePolicy"
+  ],
+  "approved_workflows": []
+}

@@ -1,0 +1,85 @@
+title: Cross-Cloud Workload Federation Followed by Privileged Activity
+id: 4ed70a77-dc34-4f2e-a5c0-4b7f5d4a3401
+status: experimental
+description: >-
+  Detects one workload federation subject successfully authenticating to two or
+  more cloud providers from the same source within 15 minutes, followed by a
+  sensitive API action after the multi-cloud threshold is reached. Suppression
+  requires a complete expected-behavior match, not an approved subject alone.
+author: Bryant Pickford
+version: 1.1.0
+date: 2026-08-06
+logsource:
+  category: ocsf
+  classes:
+    - 3002
+    - 6003
+detection:
+  authentication:
+    class_uid: 3002
+    status_id: 1
+    unmapped.federation_subject|exists: true
+  privileged_follow_on:
+    class_uid: 6003
+    status_id: 1
+    api.operation:
+      - SecretGet
+      - GetSecretValue
+      - SetIamPolicy
+      - AttachRolePolicy
+  correlation:
+    group_by:
+      - unmapped.federation_subject
+      - src_endpoint.ip
+    rolling_timespan: 15m
+    distinct_count:
+      field: cloud.provider
+      gte: 2
+    ordered_follow_on:
+      selection: privileged_follow_on
+      after: distinct_count_threshold
+  approved_main_release:
+    all_of:
+      unmapped.federation_subject: repo:northstar-robotics/agent-deploy:ref:refs/heads/main
+      src_endpoint.ip: 192.0.2.25
+      cloud.provider|set_equals:
+        - AWS
+        - GCP
+      unmapped.target_role|set_equals:
+        - ReleaseDeployer
+        - release-deployer
+      provider_target_role_pair|set_equals:
+        - AWS:ReleaseDeployer
+        - GCP:release-deployer
+      unmapped.token_issuer|set_equals:
+        - https://token.actions.example.test
+      unmapped.token_audience|set_equals:
+        - sts.amazonaws.com
+        - //iam.googleapis.com/projects/123456789/locations/global/workloadIdentityPools/ci/providers/actions
+      api.operation|subset_of:
+        - GetSecretValue
+  condition: authentication and correlation and not approved_main_release
+fields:
+  - time_dt
+  - unmapped.federation_subject
+  - unmapped.token_issuer
+  - unmapped.token_audience
+  - cloud.provider
+  - cloud.account.uid
+  - src_endpoint.ip
+  - unmapped.target_role
+  - api.operation
+falsepositives:
+  - Approved multi-cloud deployment jobs using one egress NAT address
+  - Security validation workflows intentionally exercising federated trust
+  - Shared proxies where source IP does not identify one workload
+level: high
+tags:
+  - attack.t1078
+  - attack.t1550
+  - ocsf.authentication
+  - cloud.identity
+notes:
+  - Correlation syntax is intentionally engine-neutral; compile it for your SIEM.
+  - Exact set comparisons prevent a known subject from suppressing a new provider, role, source, audience, or action.
+  - iam:PassRole is not listed as an API operation because it is an authorization permission checked during another service API call; detect the role-accepting API and role parameter instead.

@@ -1,0 +1,33 @@
+# macOS and editors
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Learner-local and generated artifacts
+work/
+dist/
+*.log
+
+# Credentials and local environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Presenter-only assets (kept outside the public repository)
+docs/*.pptx
+docs/~$*
+docs/slides*-outline.md
+tools/build_slides*.py
