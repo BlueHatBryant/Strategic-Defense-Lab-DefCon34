@@ -19,7 +19,7 @@
 - [x] Create a tagged release: `defcon34`.
 - [x] Attach `dist/strategic-defense-lab.zip` and `dist/strategic-defense-lab.zip.sha256` as release assets.
 - [x] Confirm the published checksum matches the uploaded ZIP: `aceb46e72eceb62e1ceb86705013c44218c0a1b4efcd8a471b523709da908697`.
-- [ ] Review public links and current AWS/OCSF documentation.
+- [x] Review public links and current AWS/OCSF documentation.
 - [x] Confirm no credentials, customer data, internal-only links, proprietary logs, or presenter-only files are tracked (`git status --ignored` reviewed; `.DS_Store`, `dist/`, `__pycache__` correctly ignored).
 
 ## What belongs in the GitHub repository
