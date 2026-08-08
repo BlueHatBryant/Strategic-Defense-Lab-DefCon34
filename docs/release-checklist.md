@@ -14,13 +14,13 @@
 
 - [x] License selected: MIT (`LICENSE`). Confirm no employer/sponsor approval obligation applies before relying on this.
 - [x] Initialize Git and inspect `git status --ignored` before the first commit.
-- [ ] Create the GitHub repository and choose the public URL used in the deck/QR code.
-- [ ] Push a branch and confirm the GitHub Actions workflow passes on Linux, macOS, and Windows.
-- [ ] Create a tagged release, such as `defcon34` or `v1.0.0`.
-- [ ] Attach `dist/strategic-defense-lab.zip` and `dist/strategic-defense-lab.zip.sha256` as release assets.
-- [ ] Confirm the published checksum matches the uploaded ZIP.
+- [x] Create the GitHub repository and choose the public URL used in the deck/QR code: `https://github.com/BlueHatBryant/Strategic-Defense-Lab-DefCon34`.
+- [x] Push a branch and confirm the GitHub Actions workflow passes on Linux, macOS, and Windows (verify-lab, both `main` and `defcon34` runs green).
+- [x] Create a tagged release: `defcon34`.
+- [x] Attach `dist/strategic-defense-lab.zip` and `dist/strategic-defense-lab.zip.sha256` as release assets.
+- [x] Confirm the published checksum matches the uploaded ZIP: `aceb46e72eceb62e1ceb86705013c44218c0a1b4efcd8a471b523709da908697`.
 - [ ] Review public links and current AWS/OCSF documentation.
-- [ ] Confirm no credentials, customer data, internal-only links, proprietary logs, or presenter-only files are tracked.
+- [x] Confirm no credentials, customer data, internal-only links, proprietary logs, or presenter-only files are tracked (`git status --ignored` reviewed; `.DS_Store`, `dist/`, `__pycache__` correctly ignored).
 
 ## What belongs in the GitHub repository
 
